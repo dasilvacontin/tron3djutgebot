@@ -36,7 +36,6 @@ function save () {
 	};
 	try {
 		fs.writeFileSync("backup.json", JSON.stringify(saveFile), {encoding:'utf8'});
-		console.log("saved backup.json");
 	} catch (e) {
 		console.log("wow, couldn't write, much fail, very error handling, wow");
 	}
@@ -70,19 +69,22 @@ T.post('statuses/update', { status: 'hello world!' }, function(err, reply) {
 
 var troll_replies = [];
 troll_replies.push(function (username) {
-	return "A "+username+" le veo con ganas de que le dedique una ronda.";
+	return username+", te veo con ganas de que te dedique una ronda.";
 });
 troll_replies.push(function (username) {
 	return "Me va a costar menos acabar con "+username+" que conseguir la independencia de Catalunya";
 });
 troll_replies.push(function (username) {
-	return "Tranquilo, "+username+", en cuanto termine de acariciar al gato empieza tu última ronda";
+	return username+" tranquilo, en cuanto termine de acariciar al gato empieza tu última ronda. ;)";
 });
 troll_replies.push(function (username) {
-	return "¿Ah sí? Pues en la siguiente ronda las motos que choquen con "+username+" tendrán una probabilidad del 100% de sobrevivir";
+	return "¿Ah sí? Pues en la siguiente ronda las motos que choquen con "+username+" tendrán una probabilidad del 100% de sobrevivir.";
 });
 troll_replies.push(function (username) {
-	return "Tranquilo "+username+", lo del día aquél que subiste un BFS recursivo queda entre nosotros dos.";
+	return username+" lo del día aquél que subiste un BFS recursivo queda entre nosotros dos.";
+});
+troll_replies.push(function (username) {
+	return username+" No te preocupes, puedes volver a intentarlo el año que viene.";
 });
 
 function getRandomReplyFunction () {
@@ -98,6 +100,7 @@ function sendReplyToUsername (username, statusId) {
 		  if (err) {
 		  	console.log("error sending: "+msg);
 		  	console.log(err);
+		  	sendReplyToUsername (username, statusId);
 		  }
 		  else console.log("sent: "+msg);
 
