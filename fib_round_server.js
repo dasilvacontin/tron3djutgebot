@@ -89,11 +89,11 @@ function getRandomReplyFunction () {
 	return troll_replies[Math.floor(Math.random()*troll_replies.length)];
 }
 
-function sendReplyToUsername (username) {
+function sendReplyToUsername (username, statusId) {
 	var msg = getRandomReplyFunction()(username);
 	if (msg == undefined) return;
 	setTimeout(function () {
-		T.post('statuses/update', { status: msg }, function(err, reply) {
+		T.post('statuses/update', { status: msg, in_reply_to_status_id: statusId, include_entities: true}, function(err, reply) {
 		  //  ...
 		  if (err) {
 		  	console.log("error sending: "+msg);
@@ -118,7 +118,7 @@ function reply_n00bs () {
 			if (i==0) newestDate = date;
 			if (lastMentionDate == date) break;
 			mentioners.push(username);
-			sendReplyToUsername(username);
+			sendReplyToUsername(username, status.id);
 		}
 		lastMentionDate = newestDate;
 	});
